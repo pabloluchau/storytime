@@ -1,0 +1,134 @@
+<div>
+  <div>
+    <h1>
+      List of all story parts
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new story part
+    </h2>
+
+    <form action="/insert_story_part" method="post">
+      <div>
+        <label for="body_box">
+          Body
+        </label>
+
+        <input type="text" id="body_box" name="query_body">
+      </div>
+
+      <div>
+        <label for="story_id_box">
+          Story
+        </label>
+
+        <input type="text" id="story_id_box" name="query_story_id">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id">
+      </div>
+
+      <div>
+        <label for="close_votes_count_box">
+          Close votes count
+        </label>
+
+        <input type="text" id="close_votes_count_box" name="query_close_votes_count">
+      </div>
+
+      <button>
+        Create story part
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Body
+        </th>
+
+        <th>
+          Story
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Close votes count
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_story_parts.each do |a_story_part| %>
+      <tr>
+        <td>
+          <%= a_story_part.id %>
+        </td>
+
+        <td>
+          <%= a_story_part.body %>
+        </td>
+
+        <td>
+          <%= a_story_part.story_id %>
+        </td>
+
+        <td>
+          <%= a_story_part.user_id %>
+        </td>
+
+        <td>
+          <%= a_story_part.close_votes_count %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_story_part.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_story_part.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/story_parts/<%= a_story_part.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

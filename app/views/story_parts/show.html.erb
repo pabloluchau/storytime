@@ -1,0 +1,116 @@
+<div>
+  <div>
+    <h1>
+      Story part #<%= @the_story_part.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/story_parts">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_story_part/<%= @the_story_part.id %>">
+          Delete story part
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Body
+      </dt>
+      <dd>
+        <%= @the_story_part.body %>
+      </dd>
+
+      <dt>
+        Story
+      </dt>
+      <dd>
+        <%= @the_story_part.story_id %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_story_part.user_id %>
+      </dd>
+
+      <dt>
+        Close votes count
+      </dt>
+      <dd>
+        <%= @the_story_part.close_votes_count %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_story_part.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_story_part.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit story part
+    </h2>
+
+    <form action="/modify_story_part/<%= @the_story_part.id %>"  method="post" >
+      <div>
+        <label for="body_box">
+          Body
+        </label>
+
+        <input type="text" id="body_box" name="query_body" value="<%= @the_story_part.body %>">
+      </div>
+
+      <div>
+        <label for="story_id_box">
+          Story
+        </label>
+
+        <input type="text" id="story_id_box" name="query_story_id" value="<%= @the_story_part.story_id %>">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_story_part.user_id %>">
+      </div>
+
+      <div>
+        <label for="close_votes_count_box">
+          Close votes count
+        </label>
+
+        <input type="text" id="close_votes_count_box" name="query_close_votes_count" value="<%= @the_story_part.close_votes_count %>">
+      </div>
+
+      <button>
+        Update story part
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

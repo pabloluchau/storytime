@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Close vote #<%= @the_close_vote.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/close_votes">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_close_vote/<%= @the_close_vote.id %>">
+          Delete close vote
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Story
+      </dt>
+      <dd>
+        <%= @the_close_vote.story_id %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_close_vote.user_id %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_close_vote.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_close_vote.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit close vote
+    </h2>
+
+    <form action="/modify_close_vote/<%= @the_close_vote.id %>"  method="post" >
+      <div>
+        <label for="story_id_box">
+          Story
+        </label>
+
+        <input type="text" id="story_id_box" name="query_story_id" value="<%= @the_close_vote.story_id %>">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_close_vote.user_id %>">
+      </div>
+
+      <button>
+        Update close vote
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

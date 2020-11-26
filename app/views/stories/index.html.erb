@@ -1,0 +1,122 @@
+<div>
+    <h1>
+      StoryTime
+    </h1>
+</div>
+<div>
+  <h2>Let the people decide where your tale goes</h2>
+</div>
+
+<hr>
+
+<% if @current_user != nil %>
+  <div>
+    Welcome, <%= @current_user.username %>!
+  </div>
+  <div>
+    <a href = "/account_details">Account Details</a>
+  </div>
+<% else %>
+  <div>
+    <a href = "/sign_in">Sign In</a>
+  </div>
+  <div>
+    <a href = "/sign_up">Sign Up</a>
+  </div>
+<% end %>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new story
+    </h2>
+
+    <form action="/insert_story" method="post">
+      <div>
+        <label for="body_box">
+          Body
+        </label>
+
+        <input type="text" id="body_box" name="query_body">
+      </div>
+
+      <div>
+        <label for="filter_box">
+          Filter
+        </label>
+
+        <input type="text" id="filter_box" name="query_filter">
+      </div>
+
+      <button>
+        Create story
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th>
+          Username
+        </th>
+
+        <th>
+          Body
+        </th>
+
+        <th>
+          Filter
+        </th>
+
+        <th>
+          Likes count
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_stories.each do |a_story| %>
+      <tr>
+        <td>
+          <%= a_story.user.username %>
+        </td>
+
+        <td>
+          <%= a_story.body %>
+        </td>
+
+        <td>
+          <%= a_story.filter %>
+        </td>
+
+        <td>
+          <%= a_story.likes_count %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_story.created_at) %> ago
+        </td>
+
+        <td>
+          <a href="/stories/<%= a_story.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>

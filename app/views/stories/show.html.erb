@@ -1,0 +1,93 @@
+<div>
+  <div>
+    <h1>
+      Story #<%= @the_story.id %> details
+    </h1>
+
+    <div>
+      <a href="/stories">
+        Go back
+      </a>
+    </div>
+
+
+    <dl>
+      <dt>
+        Body
+      </dt>
+      <dd>
+        <%= @the_story.body %>
+      </dd>
+
+      <dt>
+        User
+      </dt>
+      <dd>
+        <%= @the_story.user.username %>
+      </dd>
+
+      <dt>
+        Filter
+      </dt>
+      <dd>
+        <%= @the_story.filter %>
+      </dd>
+
+      <dt>
+        Likes count
+      </dt>
+      <dd>
+        <%= @the_story.likes_count %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_story.created_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<% if @current_user.id == @the_story.user.id%>
+  
+  <div>
+    <h2>
+      Edit story
+    </h2>
+
+    <div>
+        <a href="/delete_story/<%= @the_story.id %>">
+          Delete story
+        </a>
+    </div>
+
+    <form action="/modify_story/<%= @the_story.id %>"  method="post" >
+      <div>
+        <label for="body_box">
+          Body
+        </label>
+
+        <input type="text" id="body_box" name="query_body" value="<%= @the_story.body %>">
+      </div>
+
+      <div>
+        <label for="filter_box">
+          Filter
+        </label>
+
+        <input type="text" id="filter_box" name="query_filter" value="<%= @the_story.filter %>">
+      </div>
+
+      <button>
+        Update story
+      </button>
+    </form>
+  </div>
+<% end %>
+
+<hr>

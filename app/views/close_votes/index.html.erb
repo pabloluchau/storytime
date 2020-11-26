@@ -1,0 +1,102 @@
+<div>
+  <div>
+    <h1>
+      List of all close votes
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new close vote
+    </h2>
+
+    <form action="/insert_close_vote" method="post">
+      <div>
+        <label for="story_id_box">
+          Story
+        </label>
+
+        <input type="text" id="story_id_box" name="query_story_id">
+      </div>
+
+      <div>
+        <label for="user_id_box">
+          User
+        </label>
+
+        <input type="text" id="user_id_box" name="query_user_id">
+      </div>
+
+      <button>
+        Create close vote
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Story
+        </th>
+
+        <th>
+          User
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_close_votes.each do |a_close_vote| %>
+      <tr>
+        <td>
+          <%= a_close_vote.id %>
+        </td>
+
+        <td>
+          <%= a_close_vote.story_id %>
+        </td>
+
+        <td>
+          <%= a_close_vote.user_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_close_vote.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_close_vote.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/close_votes/<%= a_close_vote.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
