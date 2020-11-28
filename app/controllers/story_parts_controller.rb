@@ -22,13 +22,13 @@ class StoryPartsController < ApplicationController
     the_story_part.body = params.fetch("query_body")
     the_story_part.story_id = params.fetch("query_story_id")
     the_story_part.user_id = params.fetch("query_user_id")
-    the_story_part.close_votes_count = params.fetch("query_close_votes_count")
+
 
     if the_story_part.valid?
       the_story_part.save
-      redirect_to("/story_parts", { :notice => "Story part created successfully." })
+      redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story part created successfully." })
     else
-      redirect_to("/story_parts", { :notice => "Story part failed to create successfully." })
+      redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story part failed to create successfully." })
     end
   end
 

@@ -1,85 +1,37 @@
 <div>
   <div>
     <h1>
-      Like #<%= @the_like.id %> details
+      Your Likes
     </h1>
 
-    <div>
-      <div>
-        <a href="/likes">
-          Go back
-        </a>
-      </div>
 
-      <div>
-        <a href="/delete_like/<%= @the_like.id %>">
-          Delete like
-        </a>
-      </div>
+    <div>
+      <a href="/">
+        Go home
+      </a>
     </div>
 
+
+
     <dl>
-      <dt>
-        User
-      </dt>
-      <dd>
-        <%= @the_like.user_id %>
-      </dd>
+      <% @the_like.each do |nice| %>
 
-      <dt>
-        Story
-      </dt>
-      <dd>
-        <%= @the_like.story_id %>
-      </dd>
+        <dt>
+          <%= nice.user.username %>
+        </dt>
+        <dd>
+          <%= nice.story.body %>
+        </dd>
 
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_like.created_at) %> ago
-      </dd>
+        <dd>
+          <a href="/delete_like/<%= nice.id %>">
+            Un-like
+          </a>
+        </dd>
 
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_like.updated_at) %> ago
-      </dd>
+
+      <% end %>
     </dl>
-  </div>
-</div>
-
-<hr>
-
-
-<div>
-  <div>
-    <h2>
-      Edit like
-    </h2>
-
-    <form action="/modify_like/<%= @the_like.id %>"  method="post" >
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
-
-        <input type="text" id="user_id_box" name="query_user_id" value="<%= @the_like.user_id %>">
-      </div>
-
-      <div>
-        <label for="story_id_box">
-          Story
-        </label>
-
-        <input type="text" id="story_id_box" name="query_story_id" value="<%= @the_like.story_id %>">
-      </div>
-
-      <button>
-        Update like
-      </button>
-    </form>
   </div>
 </div>
 

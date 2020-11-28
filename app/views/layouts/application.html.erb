@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FinalProject</title>
+    <title>StoryTime</title>
     <%= csrf_meta_tags %>
 
     <!-- Expand the number of characters we can use in the document beyond basic ASCII 🎉 -->
@@ -16,6 +16,42 @@
   </head>
 
   <body>
+
+    <h1>StoryTime</h1>
+    <h3>Let the people decide where your tale goes</h3>
+
+    <ul>
+      <% if @current_user == nil %>
+        <li>
+          <a href="/sign_in">
+            Sign in
+          </a>
+        </li>
+        
+        <li>
+          <a href="/sign_up">
+            Sign up
+          </a>
+        </li>
+      <% else %>
+        <li>Welcome, <%= @current_user.username %>!</li>
+        
+        <li>
+          <a href = "/">Home!</a>
+        </li>
+
+        <li>
+          <a href = "/account_details">Account Details</a>
+        </li>
+
+        <li>
+          <a href="/likes/<%= @current_user.id %>">
+            My likes
+          </a>
+        </li>
+      <% end %>
+    </ul>
+
     <%= yield %>
   </body>
 </html>

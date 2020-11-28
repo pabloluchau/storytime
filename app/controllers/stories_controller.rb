@@ -14,6 +14,8 @@ class StoriesController < ApplicationController
 
     @the_story = matching_stories.at(0)
 
+    @the_story_parts = @the_story.story_parts.order({ :created_at => :asc})
+
     render({ :template => "stories/show.html.erb" })
   end
 

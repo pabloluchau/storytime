@@ -1,36 +1,33 @@
 <div>
   <div>
     <h1>
-      Story #<%= @the_story.id %> details
+      A <%= @the_story.user.username %> production
     </h1>
+    <h3>
+      <%= @the_story.filter %>
+    </h3>
 
-    <div>
-      <a href="/stories">
-        Go back
+    <% user_like = @the_story.likes.where( :user_id => @current_user.id ).first %>
+
+    <% if user_like == nil %>
+      <form action="/insert_like" method="post">
+        <input type="hidden" name="query_story_id" value="<%= @the_story.id %>">
+
+        <button>Like</button>
+      </form>
+    <% else %>
+      <a href="/delete_like/<%= user_like.id %>">
+        Unlike
       </a>
-    </div>
+    <% end %>
 
 
     <dl>
-      <dt>
-        Body
-      </dt>
-      <dd>
-        <%= @the_story.body %>
-      </dd>
-
       <dt>
         User
       </dt>
       <dd>
         <%= @the_story.user.username %>
-      </dd>
-
-      <dt>
-        Filter
-      </dt>
-      <dd>
-        <%= @the_story.filter %>
       </dd>
 
       <dt>
@@ -46,9 +43,58 @@
       <dd>
         <%= time_ago_in_words(@the_story.created_at) %> ago
       </dd>
+
+
     </dl>
   </div>
 </div>
+
+<dl>
+  <dt>
+    <%= @the_story.user.username %>
+  <dt>
+  <dd>
+    <%= @the_story.body %>
+  </dd>
+  <% @the_story_parts.each do |part|%>
+    <dt>
+      <%= part.user.username%>
+    </dt>
+    <dd>
+      <%= part.body%>
+    </dd>
+  <% end %>
+</dl>
+
+<div>
+  <h2>
+    Add a new story part
+  </h2>
+
+  <form action="/insert_story_part" method="post">
+    <div>
+      <label for="body_box">
+        Body
+      </label>
+
+      <input type="text" id="body_box" name="query_body">
+    </div>
+
+    <div>
+      <input type="hidden" id="story_id_box" name="query_story_id" value = "<%= @the_story.id %>">
+    </div>
+
+    <div>
+
+      <input type="hidden" id="user_id_box" name="query_user_id" value = "<%= @current_user.id %>">
+    </div>
+
+    <button>
+      Create your story part
+    </button>
+  </form>
+</div>
+
 
 <hr>
 
@@ -91,3 +137,11 @@
 <% end %>
 
 <hr>
+
+<div>
+  <a href="/stories">
+    Go back
+  </a>
+</div>
+
+
