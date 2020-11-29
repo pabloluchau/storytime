@@ -19,38 +19,41 @@ class CloseVotesController < ApplicationController
 
   def create
     the_close_vote = CloseVote.new
-    the_close_vote.story_id = params.fetch("query_story_id")
-    the_close_vote.user_id = params.fetch("query_user_id")
+    the_close_vote.story_id = params.fetch("query_story_part_id")
+    the_close_vote.user_id = @current_user.id
+
+    the_story = Story.all.where({ :id => the_close_vote.story_parts.story.id }).first
 
     if the_close_vote.valid?
       the_close_vote.save
-      redirect_to("/close_votes", { :notice => "Close vote created successfully." })
+      redirect_to("/stories/#{the_story.id}", { :notice => "Close vote created successfully." })
     else
-      redirect_to("/close_votes", { :notice => "Close vote failed to create successfully." })
+      redirect_to("/stories/#{the_story.id}", { :notice => "Close vote failed to create successfully." })
     end
   end
 
-  def update
-    the_id = params.fetch("path_id")
-    the_close_vote = CloseVote.where({ :id => the_id }).at(0)
+  # def update
+  #   the_id = params.fetch("path_id")
+  #   the_close_vote = CloseVote.where({ :id => the_id }).at(0)
 
-    the_close_vote.story_id = params.fetch("query_story_id")
-    the_close_vote.user_id = params.fetch("query_user_id")
+  #   the_close_vote.story_id = params.fetch("query_story_id")
+  #   the_close_vote.user_id = params.fetch("query_user_id")
 
-    if the_close_vote.valid?
-      the_close_vote.save
-      redirect_to("/close_votes/#{the_close_vote.id}", { :notice => "Close vote updated successfully."} )
-    else
-      redirect_to("/close_votes/#{the_close_vote.id}", { :alert => "Close vote failed to update successfully." })
-    end
-  end
+  #   if the_close_vote.valid?
+  #     the_close_vote.save
+  #     redirect_to("/close_votes/#{the_close_vote.id}", { :notice => "Close vote updated successfully."} )
+  #   else
+  #     redirect_to("/close_votes/#{the_close_vote.id}", { :alert => "Close vote failed to update successfully." })
+  #   end
+  # end
 
   def destroy
     the_id = params.fetch("path_id")
     the_close_vote = CloseVote.where({ :id => the_id }).at(0)
+    the_story = Story.all.where({ :id => the_close_vote.story_parts.story.id }).first
 
     the_close_vote.destroy
 
-    redirect_to("/close_votes", { :notice => "Close vote deleted successfully."} )
+    redirect_to("/stories/#{the_story.id}", { :notice => "Close vote deleted successfully."} )
   end
 end

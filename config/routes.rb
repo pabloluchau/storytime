@@ -37,6 +37,14 @@ Rails.application.routes.draw do
   get("/likes/:path_id", { :controller => "likes", :action => "show" })
   get("/delete_like/:path_id", { :controller => "likes", :action => "destroy" })
   post("/insert_like", { :controller => "likes", :action => "create" })
+
+  #CLOSE VOTES
+
+  post("/insert_close_vote", { :controller => "close_votes", :action => "create" })
+
+  # get("/close_votes/:path_id", { :controller => "close_votes", :action => "show" })
+
+  get("/delete_close_vote/:path_id", { :controller => "close_votes", :action => "destroy" })
   
   
   
@@ -45,14 +53,14 @@ Rails.application.routes.draw do
   # # Routes for the Close vote resource:
 
   # # CREATE
-  # post("/insert_close_vote", { :controller => "close_votes", :action => "create" })
+  # 
   # # READ
   # get("/close_votes", { :controller => "close_votes", :action => "index" })
-  # get("/close_votes/:path_id", { :controller => "close_votes", :action => "show" }) 
+  # 
   # # UPDATE 
   # post("/modify_close_vote/:path_id", { :controller => "close_votes", :action => "update" }) 
   # # DELETE
-  # get("/delete_close_vote/:path_id", { :controller => "close_votes", :action => "destroy" })
+  # 
 
   # #------------------------------
 

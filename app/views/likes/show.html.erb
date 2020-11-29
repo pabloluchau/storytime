@@ -22,7 +22,11 @@
         <dd>
           <%= nice.story.body %>
         </dd>
-
+        <dd>
+          <a href = "/stories/<%= nice.story.id %>">
+            Show story
+          </a>
+        </dd>
         <dd>
           <a href="/delete_like/<%= nice.id %>">
             Un-like

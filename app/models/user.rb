@@ -22,5 +22,6 @@ class User < ApplicationRecord
   has_many(:close_votes, { :class_name => "CloseVote", :foreign_key => "user_id", :dependent => :destroy })  
 
   has_many(:stories, { :through => :likes, :source => :story })
+  has_many(:story_parts, { :through => :close_votes, :source => :story_parts})
 
 end

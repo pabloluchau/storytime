@@ -38,7 +38,7 @@
       </dd>
 
       <dt>
-        Created at
+        Created
       </dt>
       <dd>
         <%= time_ago_in_words(@the_story.created_at) %> ago
@@ -60,16 +60,37 @@
     <dt>
       <%= part.user.username%>
     </dt>
+
     <dd>
       <%= part.body%>
+    </dd>
+
+    <dd>
+      Close votes: <%= part.close_votes_count %>
+    </dd>
+  
+    <dd>
+      <%# <% user_close_vote = @current_user.story_parts.where(:id => part.id).first %>
+      <% user_close_vote = CloseVote.all.where({ :user_id => @current_user.id}).where( :story_id => part.id).first %>
+      <% if user_close_vote == nil %>
+        <form action="/insert_close_vote" method="post">
+          <input type="hidden" name="query_story_part_id" value="<%= part.id %>">
+
+          <button>Vote to close this story</button>
+        </form>
+      <% else %>
+        <a href="/delete_close_vote/<%= user_close_vote.id %>">
+          Un-vote
+        </a>
+      <% end %>
     </dd>
   <% end %>
 </dl>
 
 <div>
-  <h2>
+  <h3>
     Add a new story part
-  </h2>
+  </h3>
 
   <form action="/insert_story_part" method="post">
     <div>

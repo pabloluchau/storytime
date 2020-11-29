@@ -10,7 +10,7 @@
 #
 class CloseVote < ApplicationRecord
 
-  belongs_to(:user, { :required => false, :class_name => "User", :foreign_key => "user_id" })
-  belongs_to(:storypart, { :required => false, :class_name => "StoryPart", :foreign_key => "story_id", :counter_cache => true })
+  belongs_to(:users, { :required => false, :class_name => "User", :foreign_key => "user_id" })
+  belongs_to(:story_parts, { :required => false, :class_name => "StoryPart", :foreign_key => "story_id", :counter_cache => true })
   
 end
