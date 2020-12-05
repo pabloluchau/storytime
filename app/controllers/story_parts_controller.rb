@@ -19,7 +19,9 @@ class StoryPartsController < ApplicationController
 
   def create
     the_story_part = StoryPart.new
+    
     the_story_part.body = params.fetch("query_body")
+    the_story_part.close_votes_count = 0
     the_story_part.story_id = params.fetch("query_story_id")
     the_story_part.user_id = params.fetch("query_user_id")
 

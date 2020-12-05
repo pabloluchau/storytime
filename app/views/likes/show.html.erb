@@ -12,31 +12,25 @@
     </div>
 
 
-
-    <dl>
+    <div class = "card-columns">
       <% @the_like.each do |nice| %>
-
-        <dt>
-          <%= nice.user.username %>
-        </dt>
-        <dd>
-          <%= nice.story.body %>
-        </dd>
-        <dd>
-          <a href = "/stories/<%= nice.story.id %>">
-            Show story
-          </a>
-        </dd>
-        <dd>
-          <a href="/delete_like/<%= nice.id %>">
-            Un-like
-          </a>
-        </dd>
-
-
+        <div class = "card">
+          <div class = "card-body">
+            <h3 class = "display-5"><%= nice.story.user.username %></h3>
+            <span class="badge badge-pill badge-primary"><%= nice.story.filter %></span>
+            <p class="text-black-50"><%= time_ago_in_words(nice.story.created_at) %> ago</p>
+            <p><%= nice.story.body %></p>
+            <p class="text-black-50">Likes: <%= nice.story.likes_count %></p>
+            <a href="/stories/<%= nice.story.id %>">
+              Show details
+            </a>
+            or
+            <a href="/delete_like/<%= nice.id %>">
+              Un-like
+            </a>
+          </div>
+        </div>
       <% end %>
-    </dl>
+    </div>
   </div>
 </div>
-
-<hr>

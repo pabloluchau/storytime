@@ -1,29 +1,41 @@
-<hr>
 
 <div>
   <div>
-    <h2>
+    <hr>
+
+    <h3 class = "display-5">Let the people decide where your tale goes</h3>
+
+    <hr>
+
+    <h3 class = "display-5">
       Add a new story
-    </h2>
+    </h3>
 
     <form action="/insert_story" method="post">
-      <div>
+      <div class="form-group">
         <label for="body_box">
           Body
         </label>
 
-        <input type="text" id="body_box" name="query_body">
+        <textarea type="text" class="form-control" id="body_box" name="query_body" rows = "1"></textarea>
       </div>
 
-      <div>
+      <div class="form-group">
         <label for="filter_box">
           Filter
         </label>
 
-        <input type="text" id="filter_box" name="query_filter">
+        <% filters = ["Adventure","Comedy","Fantasy","Horror","Mystery","Religion","Romance","Tearjerker","NSFW"] %>
+        <select class="form-control" id="filter_box" name="query_filter">
+          <% filters.each do |a_filter| %>
+            <option value="<%= a_filter %>">
+              <%= a_filter %>
+            </option>
+          <% end %>
+        </select>
       </div>
 
-      <button>
+      <button class="btn btn-dark" >
         Create story
       </button>
     </form>
@@ -31,9 +43,10 @@
 </div>
 
 <hr>
+
 <div>
   <div>
-    <table>
+    <%# <table>
       <tr>
         <th>
           Username
@@ -60,35 +73,53 @@
       </tr>
 
       <% @list_of_stories.each do |a_story| %>
-      <tr>
+      <%# <tr>
         <td>
           <%= a_story.user.username %>
-        </td>
+        <%# </td>
 
         <td>
           <%= a_story.body %>
-        </td>
+        <%# </td>
 
         <td>
           <%= a_story.filter %>
-        </td>
+        <%#</td>
 
         <td>
           <%= a_story.likes_count %>
-        </td>
+        <%#</td>
 
         <td>
-          <%= time_ago_in_words(a_story.created_at) %> ago
-        </td>
+          <%= time_ago_in_words(a_story.created_at) %>
+        <%#</td>
 
         <td>
-          <a href="/stories/<%= a_story.id %>">
+          <a href="/stories/<%= a_story.id %><%#%">
             Show details
           </a>
         </td>
       </tr>
       <% end %>
-    </table>
+    <%#</table> %>
+
+
+    <div class = "card-columns">
+      <% @list_of_stories.each do |a_story| %>
+        <div class = "card">
+          <div class = "card-body">
+            <h3 class = "display-5"><%= a_story.user.username %></h3>
+            <span class="badge badge-pill badge-primary"><%= a_story.filter %></span>
+            <p class="text-black-50"><%= time_ago_in_words(a_story.created_at) %> ago</p>
+            <p><%= a_story.body %></p>
+            <p class="text-black-50">Likes: <%= a_story.likes_count %></p>
+            <a href="/stories/<%= a_story.id %>">
+              Show details
+            </a>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 

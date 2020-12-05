@@ -21,15 +21,24 @@ class StoriesController < ApplicationController
 
   def create
     the_story = Story.new
-    the_story.body = params.fetch("query_body")
+    the_story.body = params.fetch("query_body").strip
     the_story.user_id = @current_user.id
     the_story.filter = params.fetch("query_filter")
+    the_story.likes_count = 0
 
-    if the_story.valid?
+    story_split = the_story.body.split("")
+
+    if story_split.index(".") == story_split.count() - 1 
       the_story.save
-      redirect_to("/stories", { :notice => "Story created successfully." })
+      redirect_to("/stories", { :notice => "Story posted!" })
+    elsif story_split.index("?") == story_split.count() - 1 
+      the_story.save
+      redirect_to("/stories", { :notice => "Story posted!" })
+    elsif story_split.index("!") == story_split.count() - 1 
+      the_story.save
+      redirect_to("/stories", { :notice => "Story posted!" })
     else
-      redirect_to("/stories", { :notice => "Story failed to create successfully." })
+      redirect_to("/stories", { :alert => "The story start can only contain one sentence and must end in a period, question mark, or exclamation point." })
     end
   end
 

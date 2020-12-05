@@ -2,15 +2,15 @@
 
 <form action="/insert_user" method="post">
 
-  <div>
+  <div class="form-group">
     <label for="email_box">Email</label>
-    <input id="email_box" name="query_email" placeholder="Choose a email..." type="text">
+    <input id="email_box" class="form-control" name="query_email" placeholder="Choose a email..." type="text">
   </div>
                  
-  <div>
+  <div class="form-group">
     <label for="username_box">Username</label>
       
-    <input type="text" id="username_box" name="query_username">
+    <input type="text" class="form-control" id="username_box" placeholder = 'Choose a username...'name="query_username">
   </div>
          
   <%# <div>
@@ -18,17 +18,17 @@
     <input type="hidden" id="story_starts_count_box" name="query_story_starts_count">
   </div> %>
     
-  <div>
+  <div class="form-group">
     <label for="password_box">Password</label>
-    <input id="password_box" name="query_password" placeholder="Choose a password..." type="password">
+    <input id="password_box" class="form-control" name="query_password" placeholder="Choose a password..." type="password">
   </div>
 
-  <div>
+  <div class="form-group">
     <label for="password_confirmation_box">Password Confirmation</label>
-    <input id="password_confirmation_box" name="query_password_confirmation" placeholder="Confirm your password..." type="password">
+    <input id="password_confirmation_box" class="form-control" name="query_password_confirmation" placeholder="Confirm your password..." type="password">
   </div>
 
-  <button>
+  <button class="btn btn-dark">
     Sign up
   </button>
 </form>

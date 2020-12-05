@@ -13,7 +13,7 @@
       <form action="/insert_like" method="post">
         <input type="hidden" name="query_story_id" value="<%= @the_story.id %>">
 
-        <button>Like</button>
+        <button class="btn btn-outline-success">Like</button>
       </form>
     <% else %>
       <a href="/delete_like/<%= user_like.id %>">
@@ -23,97 +23,95 @@
 
 
     <dl>
-      <dt>
-        User
-      </dt>
-      <dd>
-        <%= @the_story.user.username %>
-      </dd>
+      <% if @the_story.likes_count == 1%>
+        <dt>
+          <%= @the_story.likes_count %> like
+        </dt>
+      <% elsif  @the_story.likes_count == nil %>        
+        <dt>
+          0 likes
+        </dt>
+      <% else %>
+        <dt>
+          <%= @the_story.likes_count %> likes
+        </dt>
+      <% end %>
 
       <dt>
-        Likes count
+        Created <%= time_ago_in_words(@the_story.created_at) %> ago
       </dt>
-      <dd>
-        <%= @the_story.likes_count %>
-      </dd>
-
-      <dt>
-        Created
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_story.created_at) %> ago
-      </dd>
-
 
     </dl>
   </div>
 </div>
 
-<dl>
-  <dt>
-    <%= @the_story.user.username %>
-  <dt>
-  <dd>
-    <%= @the_story.body %>
-  </dd>
+<ul>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    <%= @the_story.user.username %>: <%= @the_story.body %>
+  </li>
   <% @the_story_parts.each do |part|%>
-    <dt>
-      <%= part.user.username%>
-    </dt>
 
-    <dd>
-      <%= part.body%>
-    </dd>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <%= part.user.username%>: <%= part.body%>
+      
+      <div>
+        <% user_close_vote = CloseVote.all.where({ :user_id => @current_user.id}).where( :story_id => part.id).first %>
+        <% if user_close_vote == nil %>
+          <form class = "form-inline" action="/insert_close_vote" method="post">
+            <input type="hidden" name="query_story_part_id" value="<%= part.id %>">
 
-    <dd>
-      Close votes: <%= part.close_votes_count %>
-    </dd>
-  
-    <dd>
-      <%# <% user_close_vote = @current_user.story_parts.where(:id => part.id).first %>
-      <% user_close_vote = CloseVote.all.where({ :user_id => @current_user.id}).where( :story_id => part.id).first %>
-      <% if user_close_vote == nil %>
-        <form action="/insert_close_vote" method="post">
-          <input type="hidden" name="query_story_part_id" value="<%= part.id %>">
+            <button class="btn btn-outline-warning">Vote to close this story</button>
 
-          <button>Vote to close this story</button>
-        </form>
-      <% else %>
-        <a href="/delete_close_vote/<%= user_close_vote.id %>">
-          Un-vote
-        </a>
-      <% end %>
-    </dd>
+            <span class="badge badge-primary badge-pill"><%= part.close_votes_count %></span>
+          </form>
+        <% else %>
+          
+          
+          <a href="/delete_close_vote/<%= user_close_vote.id %>">
+            Un-vote
+          </a>
+          <span class="badge badge-primary badge-pill"><%= part.close_votes_count %></span>
+        <% end %>
+        
+      </div>
+
+    </li>
+
   <% end %>
-</dl>
+</ul>
 
 <div>
-  <h3>
-    Add a new story part
-  </h3>
+  <%# <% user_story = @current_user.stories.where({ :id => @the_story.id }) %>
+  <% user_part = @current_user.story_parts.where({ :story_id => @the_story.id }).first %>
+  <%# <% user_part = StoryPart.all.where({ :story_id => @the_story.id }).where({ :user_id => @current_user.id}) %>
+  <% if @the_story.user.id != @current_user.id && user_part == nil %>
+    <h3>
+      Add a new story part
+    </h3>
 
-  <form action="/insert_story_part" method="post">
-    <div>
-      <label for="body_box">
-        Body
-      </label>
+    <form action="/insert_story_part" method="post">
+      <div class="form-group">
+        <label for="body_box">
+          Body
+        </label>
 
-      <input type="text" id="body_box" name="query_body">
-    </div>
+        <input class="form-control" type="text" id="body_box" name="query_body">
+      </div>
 
-    <div>
-      <input type="hidden" id="story_id_box" name="query_story_id" value = "<%= @the_story.id %>">
-    </div>
+      <div>
+        <input type="hidden" id="story_id_box" name="query_story_id" value = "<%= @the_story.id %>">
+      </div>
 
-    <div>
+      <div>
 
-      <input type="hidden" id="user_id_box" name="query_user_id" value = "<%= @current_user.id %>">
-    </div>
+        <input type="hidden" id="user_id_box" name="query_user_id" value = "<%= @current_user.id %>">
+      </div>
 
-    <button>
-      Create your story part
-    </button>
-  </form>
+      <button class="btn btn-dark">
+        Create your story part
+      </button>
+    </form>
+  <% end %>
 </div>
 
 
@@ -139,7 +137,7 @@
           Body
         </label>
 
-        <input type="text" id="body_box" name="query_body" value="<%= @the_story.body %>">
+        <textarea id="body_box" name="query_body" value="<%= @the_story.body %>"><%= @the_story.body %></textarea>
       </div>
 
       <div>
@@ -150,7 +148,7 @@
         <input type="text" id="filter_box" name="query_filter" value="<%= @the_story.filter %>">
       </div>
 
-      <button>
+      <button class="btn btn-dark">
         Update story
       </button>
     </form>
