@@ -20,18 +20,52 @@ class StoryPartsController < ApplicationController
   def create
     the_story_part = StoryPart.new
     
-    the_story_part.body = params.fetch("query_body")
+    the_story_part.body = params.fetch("query_body").strip
     the_story_part.close_votes_count = 0
     the_story_part.story_id = params.fetch("query_story_id")
     the_story_part.user_id = params.fetch("query_user_id")
 
 
-    if the_story_part.valid?
-      the_story_part.save
-      redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story part created successfully." })
-    else
-      redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story part failed to create successfully." })
+    voted_parts = the_story_part.story.story_parts.order({ :close_votes_count => :desc})
+    closed_parts = Array.new
+    
+    voted_parts.each do |vote|
+      if vote.close_votes_count.present?
+        if vote.close_votes_count > 9
+          closed_parts.push("#{vote.id}")
+        end
+      end
     end
+
+    # if closed_parts == nil
+    #   the_story_part.save
+    #   redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story part created successfully." })
+    # else
+    #   p closed_parts
+    #   redirect_to("/stories/#{the_story_part.story_id}", { :alert => "Story is closed for new parts" })
+    # end
+    
+    story_split = the_story_part.body.split("")
+
+    if story_split.index(".") == story_split.count() - 1 
+      the_story_part.save
+      redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story posted!" })
+    elsif story_split.index("?") == story_split.count() - 1 
+      the_story_part.save
+      redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story posted!" })
+    elsif story_split.index("!") == story_split.count() - 1 
+      the_story_part.save
+      redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story posted!" })
+    else
+      redirect_to("/stories/#{the_story_part.story_id}", { :alert => "The story part can only contain one sentence and must end in a period, question mark, or exclamation point." })
+    end
+
+    # if the_story_part.valid?
+    #   the_story_part.save
+    #   redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story part created successfully." })
+    # else
+    #   redirect_to("/stories/#{the_story_part.story_id}", { :notice => "Story part failed to create successfully." })
+    # end
   end
 
   def update

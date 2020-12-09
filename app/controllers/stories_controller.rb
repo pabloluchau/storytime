@@ -1,6 +1,9 @@
 class StoriesController < ApplicationController
+
   def index
-    matching_stories = Story.all
+    @q = Story.ransack(params[:q])
+    
+    matching_stories = @q.result(:distinct => true).includes(:user)
 
     @list_of_stories = matching_stories.order({ :created_at => :desc })
 
@@ -47,9 +50,9 @@ class StoriesController < ApplicationController
     the_story = Story.where({ :id => the_id }).at(0)
 
     the_story.body = params.fetch("query_body")
-    the_story.user_id = params.fetch("query_user_id")
+    the_story.user_id = @current_user.id
     the_story.filter = params.fetch("query_filter")
-    the_story.likes_count = params.fetch("query_likes_count")
+    the_story.likes_count = 0
 
     if the_story.valid?
       the_story.save

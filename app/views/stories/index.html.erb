@@ -1,15 +1,41 @@
 
-<div>
+<div class = "mb-4">
   <div>
-    <hr>
+    <div class = "my-4 d-flex justify-content-center">
+      <p class="font-weight-light" style = "font-size: 37px;">Let the people decide where your tale goes</p>
 
-    <h3 class = "display-5">Let the people decide where your tale goes</h3>
+    </div>
 
-    <hr>
+    <div class = "mb-5">
+      <div class="d-flex justify-content-center">
+        <%= search_form_for @q do |f| %>
 
-    <h3 class = "display-5">
+          <div class = "form-inline">
+            
+            <%# <%= f.label :body_cont, "Search" %>
+            <%= f.text_field :body_cont, :placeholder => "Story", :class => "form-control mr-sm-2" %>
+            
+            <%= f.text_field :user_username_cont, :placeholder => "User", :class => "form-control mr-sm-2" %>
+
+            <%# <%= f.text_field :filter_cont, :placeholder => "Filter", :class => "form-control mr-sm-2" %>
+            <% filters = ["Adventure","Comedy","Fantasy","Horror","Mystery","Religion","Romance","Tearjerker","NSFW"] %>
+            <div class = "mr-2">
+              <%= f.select :filter_eq, filters, { :include_blank => true, :prompt => "Filter" }, :class => "form-control" %>
+            </div>
+            
+            <div class = "mr-2">
+              <%= f.submit :class => "btn btn-outline-success my-2 my-sm-0" %>
+            </div>
+            <a href="/stories" class="text-secondary text-decoration-none">Clear search</a>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+
+    <p class="font-weight-light" style = "font-size: 30px;">
       Add a new story
-    </h3>
+    </p>
 
     <form action="/insert_story" method="post">
       <div class="form-group">
@@ -25,7 +51,7 @@
           Filter
         </label>
 
-        <% filters = ["Adventure","Comedy","Fantasy","Horror","Mystery","Religion","Romance","Tearjerker","NSFW"] %>
+        <% filters = ["", "Adventure","Comedy","Fantasy","Horror","Mystery","Religion","Romance","Tearjerker","NSFW"] %>
         <select class="form-control" id="filter_box" name="query_filter">
           <% filters.each do |a_filter| %>
             <option value="<%= a_filter %>">
@@ -42,78 +68,24 @@
   </div>
 </div>
 
-<hr>
+
 
 <div>
   <div>
-    <%# <table>
-      <tr>
-        <th>
-          Username
-        </th>
-
-        <th>
-          Body
-        </th>
-
-        <th>
-          Filter
-        </th>
-
-        <th>
-          Likes count
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_stories.each do |a_story| %>
-      <%# <tr>
-        <td>
-          <%= a_story.user.username %>
-        <%# </td>
-
-        <td>
-          <%= a_story.body %>
-        <%# </td>
-
-        <td>
-          <%= a_story.filter %>
-        <%#</td>
-
-        <td>
-          <%= a_story.likes_count %>
-        <%#</td>
-
-        <td>
-          <%= time_ago_in_words(a_story.created_at) %>
-        <%#</td>
-
-        <td>
-          <a href="/stories/<%= a_story.id %><%#%">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    <%#</table> %>
-
 
     <div class = "card-columns">
       <% @list_of_stories.each do |a_story| %>
         <div class = "card">
           <div class = "card-body">
-            <h3 class = "display-5"><%= a_story.user.username %></h3>
-            <span class="badge badge-pill badge-primary"><%= a_story.filter %></span>
+            <div style= "display: flex">
+              <p style = "font-size:30 px"><%= a_story.user.username %></h3>
+
+              <span class="badge badge-secondary" ><%= a_story.filter %></span>
+            </div>
             <p class="text-black-50"><%= time_ago_in_words(a_story.created_at) %> ago</p>
-            <p><%= a_story.body %></p>
-            <p class="text-black-50">Likes: <%= a_story.likes_count %></p>
-            <a href="/stories/<%= a_story.id %>">
+            <p style = "font-size: 25px"><%= a_story.body %></p>
+            <span class="badge badge-pill badge-warning">Likes: <%= a_story.likes_count %></span>
+            <a href="/stories/<%= a_story.id %>" class="badge badge-pill badge-light">
               Show details
             </a>
           </div>
