@@ -24,7 +24,7 @@
             </div>
             
             <div class = "mr-2">
-              <%= f.submit :class => "btn btn-outline-success my-2 my-sm-0" %>
+              <%= f.submit :class => "btn btn-outline-warning my-2 my-sm-0" %>
             </div>
             <a href="/stories" class="text-secondary text-decoration-none">Clear search</a>
           </div>
@@ -85,7 +85,7 @@
             <p class="text-black-50"><%= time_ago_in_words(a_story.created_at) %> ago</p>
             <p style = "font-size: 25px"><%= a_story.body %></p>
             <span class="badge badge-pill badge-warning">Likes: <%= a_story.likes_count %></span>
-            <a href="/stories/<%= a_story.id %>" class="badge badge-pill badge-light">
+            <a href="/stories/<%= a_story.id %>" class="badge badge-pill badge-light stretched-link">
               Show details
             </a>
           </div>

@@ -1,8 +1,14 @@
-<h1>Account Details</h1>
+<div class = "my-4 d-flex justify-content-center">
+  <p class="font-weight-light" style = "font-size: 37px;">Account Details</p>
+
+</div>
+
 
 <hr>
 
-<h3>Hey <%= @current_user.username %>, what do you want to do?</h3>
+<p class="font-weight-light" style = "font-size: 30px;">
+  Hey <%= @current_user.username %>, what do you want to do?
+</p>
 
 <div>
   <a href = "/sign_out">Sign Out</a>

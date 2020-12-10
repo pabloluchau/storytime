@@ -61,12 +61,25 @@
 
 <ul>
   <li class="list-group-item d-flex justify-content-between align-items-center">
-    <%= @the_story.user.username %>: <%= @the_story.body %>
+    <div>
+      <%= @the_story.body %>
+      <div>
+        <small class ="text-muted"><%= @the_story.user.username %></small>
+      </div>
+    </div>
   </li>
+  
   <% @the_story_parts.each do |part|%>
 
+
     <li class="list-group-item d-flex justify-content-between align-items-center">
-      <%= part.user.username%>: <%= part.body%>
+
+      <div>
+        <%= part.body%>
+        <div>
+          <small class = "text-muted"><%= part.user.username%></small>
+        </div>
+      </div>
       
       <div>
         <% user_close_vote = CloseVote.all.where({ :user_id => @current_user.id}).where( :story_id => part.id).first %>
@@ -77,7 +90,6 @@
             <button class="btn btn-outline-danger">Vote to close this story</button>
 
             <div class = "ml-2">
-
               <span class="badge badge-danger badge-pill"><%= part.close_votes_count %></span>
             </div>
           </form>
@@ -94,12 +106,19 @@
 
     </li>
 
+    <% votes = part.close_votes_count %>
+    <% if votes > 9 %>    
+      <div class = "mt-4"><div class = "d-flex justify-content-center"><p class = "the-end h2">The end.</p></div></div>
+      <% break %>
+
+    <% end %>
+
   <% end %>
 </ul>
 
 <div class = "mt-5">
-  <% last_part = @the_story.story_parts.order({ :created_at => :desc}).first %>
-  <%# <% if  last_part.close_votes_count < 10 || last_part.close_votes_count == nil%>
+  <% vote_count = @the_story.story_parts.maximum( :close_votes_count ) %>
+  <% if  vote_count == nil || vote_count < 10%>
     <% user_part = @current_user.story_parts.where({ :story_id => @the_story.id }).first %>
     <% if @the_story.user.id != @current_user.id && user_part == nil %>
       <p class="font-weight-light" style = "font-size: 30px;">
@@ -129,10 +148,7 @@
         </button>
       </form>
     <% end %>
-  <%# <% else %>
-    <%# <% {:alert => "This story is closed"} %>
-    <%# <%= alert %>
-  <%#<% end %>
+  <% end %>
 </div>
 
 
